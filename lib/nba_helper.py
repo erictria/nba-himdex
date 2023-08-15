@@ -13,10 +13,10 @@ class NbaHelper:
     Source: https://github.com/swar/nba_api
     '''
 
-    def __init__():
+    def __init__(self):
         return
     
-    def get_players():
+    def get_players(self):
         '''
         PURPOSE: Retrieves a list of all NBA players
 
@@ -27,7 +27,7 @@ class NbaHelper:
         all_players = players.get_players()
         return all_players
     
-    def get_active_players():
+    def get_active_players(self):
         '''
         PURPOSE: Retrieves a list of all active NBA players
 
@@ -38,7 +38,7 @@ class NbaHelper:
         all_active_players = players.get_active_players()
         return all_active_players
 
-    def get_player_stats(player_id: str):
+    def get_player_stats(self, player_id: str):
         '''
         PURPOSE: Gets a player's career stats
 
@@ -59,7 +59,7 @@ class NbaHelper:
 
         return final_stats
     
-    def get_player_game_stats(player_id: str, season_id: str):
+    def get_player_game_stats(self, player_id: str, season_id: str):
         '''
         PURPOSE: Gets a player's game log stats
 
@@ -84,7 +84,7 @@ class NbaHelper:
 
         return final_player_games_stats
     
-    def get_teams():
+    def get_teams(self):
         '''
         PURPOSE: Retrieves a list of all NBA teams
 
@@ -95,7 +95,7 @@ class NbaHelper:
         all_teams = teams.get_teams()
         return all_teams
     
-    def get_team_game_stats(team_id: str, season_id: str):
+    def get_team_game_stats(self, team_id: str, season_id: str):
         '''
         PURPOSE: Gets a team's game log stats
 
@@ -106,12 +106,12 @@ class NbaHelper:
         OUTPUT:
         final_team_game_stats - pandas dataframe of a team's game stats
         '''
-        
+
         team_games = teamgamelogs.TeamGameLogs(
             team_id_nullable = team_id,
             season_nullable = season_id
         )
-        team_games_df = team_games.get_data_frames()[0]
+        team_games_df = team_games.get_data_frames()
         
         if len(team_games_df) > 0:
             final_team_game_stats = team_games_df[0]
