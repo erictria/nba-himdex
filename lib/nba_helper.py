@@ -84,6 +84,31 @@ class NbaHelper:
 
         return final_player_games_stats
     
+    def get_player_game_stats_by_team(self, team_id: str, season_id: str):
+        '''
+        PURPOSE: Gets a player's game log stats
+
+        INPUT:
+        team_id - str team id
+        season_id - str season id formatted '2015-16'
+
+        OUTPUT:
+        final_player_games_stats - pandas dataframe of a player's game stats
+        '''
+
+        player_games = playergamelogs.PlayerGameLogs(
+            team_id_nullable = team_id,
+            season_nullable = season_id
+        )
+        player_games_df = player_games.get_data_frames()
+
+        if len(player_games_df) > 0:
+            final_player_games_stats = player_games_df[0]
+        else:
+            final_player_games_stats = pd.DataFrame()
+
+        return final_player_games_stats
+
     def get_teams(self):
         '''
         PURPOSE: Retrieves a list of all NBA teams
