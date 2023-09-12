@@ -110,3 +110,19 @@ def write_df_to_sql(df: pd.DataFrame, table: str, schema: str, if_exists: str = 
         index = False,
         chunksize = DB_CHUNK_SIZE
     )
+
+def read_sql_to_df(query: str, con = DB_CONN) -> pd.DataFrame:
+    '''
+    PURPOSE: queries data from the database
+
+    INPUT:
+    query - str SQL query
+    con - db connection
+
+    OUTPUT:
+    result_df - pandas dataframe queried data
+    '''
+    
+    result_df = pd.read_sql_query(query, con = con)
+
+    return result_df

@@ -1,6 +1,7 @@
 import pandas as pd
 
 from models import *
+from db_conn import read_sql_to_df
 
 class StatsBuilder:
     '''
@@ -60,3 +61,109 @@ class StatsBuilder:
         )
 
         return player_metrics
+    
+    def compute_engineered_features(season_year: str):
+        sql_query = """
+            WITH team_totals AS (
+                SELECT DISTINCT
+                    t.season_year
+                    , t.team_id
+                    , t.team_abbreviation
+                    , t.team_name
+                    , t.game_id
+                    , t.wl
+                    , t.fgm + t.ftm + t.ast AS game_buckets
+                    , t.dreb + t.stl + t.blk AS game_stops
+                    , t.min AS game_min
+                FROM raw."team_stats" AS t
+            )
+            , player_totals AS (
+                SELECT DISTINCT
+                    p.season_year
+                    , p.player_id
+                    , p.player_name
+                    , p.team_id
+                    , p.game_id
+                    , p.fgm + p.ftm + p.ast AS player_buckets
+                    , p.dreb + p.stl + p.blk AS player_stops
+                    , p.plus_minus
+                    , p.min AS player_min
+                FROM raw."player_stats" AS p
+            )
+            , engineered_stats AS (
+                SELECT
+                    p.season_year
+                    , p.player_id
+                    , p.player_name
+                    , p.team_id
+                    , t.team_abbreviation
+                    , p.game_id
+                    , p.plus_minus
+                    , p.player_buckets
+                    , p.player_stops
+                    , p.player_buckets / t.game_buckets :: float AS bucket_contribution
+                    , p.player_stops / t.game_stops :: float AS stop_contribution
+                    , (p.player_buckets / t.game_buckets) * 100 :: float AS bucket_contribution_rate
+                    , (p.player_stops / t.game_stops) * 100 :: float AS stop_contribution_rate
+                    , p.player_min / t.game_min :: float AS min_percentage
+                FROM player_totals p
+                JOIN team_totals t ON p.game_id = t.game_id AND p.team_id = t.team_id
+            )
+            , career_stats AS (
+                SELECT
+                    c.season_id AS season_year
+                    , c.player_id
+                    , c.team_id
+                    , c.min AS average_min
+                    , c.fgm + c.ftm + c.ast AS average_buckets
+                    , c.dreb + c.stl + c.blk AS average_stops
+                FROM raw."player_career_stats" AS c
+            )
+            , player_uplifts AS (
+                SELECT
+                    e.*
+                    , c.average_min
+                    , ((e.player_buckets - c.average_buckets) / c.average_buckets) :: float AS bucket_uplift
+                    , ((e.player_stops - c.average_stops) / c.average_stops) :: float AS stop_uplift
+                FROM engineered_stats e
+                JOIN career_stats c ON e.player_id = c.player_id AND e.team_id = c.team_id AND e.season_year = c.season_year
+            )
+            , uplift_aggs AS (
+                SELECT
+                    u.season_year
+                    , u.team_id
+                    , u.game_id
+                    , SUM(u.bucket_uplift) AS total_bucket_uplift
+                    , SUM(u.stop_uplift) AS total_stop_uplift
+                    , COUNT(DISTINCT u.player_id) AS total_players
+                FROM player_uplifts u
+                GROUP BY 1, 2, 3
+            )
+            , engineered_raw AS (
+                SELECT
+                    p.*
+                    , ((u.total_bucket_uplift - p.bucket_uplift) / u.total_players) * p.min_percentage :: float AS tmt_bucket_uplift_cont_rate
+                    , ((u.total_stop_uplift - p.stop_uplift) / u.total_players) * p.min_percentage :: float AS tmt_stop_uplift_cont_rate
+                FROM player_uplifts p
+                JOIN uplift_aggs u ON p.team_id = u.team_id AND p.game_id = u.game_id AND p.season_year = u.season_year
+            )
+
+            SELECT
+                season_year
+                , team_id
+                , team_abbreviation
+                , player_id
+                , player_name
+                , AVG(average_min) AS average_min
+                , SUM(plus_minus) AS total_plus_minus
+                , AVG(bucket_contribution_rate) AS avg_bucket_contribution_rate
+                , AVG(stop_contribution_rate) AS avg_stop_contribution_rate
+                , AVG(tmt_bucket_uplift_cont_rate) AS avg_tmt_bucket_uplift_contribution_rate
+                , AVG(tmt_stop_uplift_cont_rate) AS avg_tmt_stop_uplift_contribution_rate
+            FROM engineered_raw
+            GROUP BY 1, 2, 3, 4, 5
+            ORDER BY 1, 2, 3, 4, 5
+        """
+
+        results_df = read_sql_to_df(sql_query)
+        return results_df

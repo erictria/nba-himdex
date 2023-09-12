@@ -49,7 +49,7 @@ class NbaHelper:
         final_stats - pandas dataframe of a player's stats
         '''
 
-        player_stats = playercareerstats.PlayerCareerStats(player_id = player_id)
+        player_stats = playercareerstats.PlayerCareerStats(player_id = player_id, per_mode36 = 'PerGame')
         player_stats_df = player_stats.get_data_frames()
 
         if len(player_stats_df) > 0:
