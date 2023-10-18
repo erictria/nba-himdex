@@ -103,8 +103,6 @@ class StatsBuilder:
                     , p.player_stops
                     , p.player_buckets / t.game_buckets :: float AS bucket_contribution
                     , p.player_stops / t.game_stops :: float AS stop_contribution
-                    , (p.player_buckets / t.game_buckets) * 100 :: float AS bucket_contribution_rate
-                    , (p.player_stops / t.game_stops) * 100 :: float AS stop_contribution_rate
                     , p.player_min / t.game_min :: float AS min_percentage
                 FROM player_totals p
                 JOIN team_totals t ON p.game_id = t.game_id AND p.team_id = t.team_id
@@ -122,6 +120,8 @@ class StatsBuilder:
             , player_uplifts AS (
                 SELECT
                     e.*
+                    , e.bucket_contribution * 100.0 :: float as bucket_contribution_rate
+                    , e.stop_contribution * 100.0 :: float as stop_contribution_rate
                     , c.average_min
                     , ((e.player_buckets - c.average_buckets) / c.average_buckets) :: float AS bucket_uplift
                     , ((e.player_stops - c.average_stops) / c.average_stops) :: float AS stop_uplift
