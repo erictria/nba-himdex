@@ -1,7 +1,7 @@
 import pandas as pd
 
-from models import *
-from db_conn import read_sql_to_df
+from lib.models import *
+from lib.db_conn import read_sql_to_df
 
 class StatsBuilder:
     '''
@@ -9,7 +9,7 @@ class StatsBuilder:
     '''
 
     def __init__(self):
-        return
+        pass
     
     def compute_player_totals(player_game_log: PlayerGameLog) -> PlayerGameTotals:
         player_buckets = player_game_log['fgm'] + player_game_log['ftm'] + player_game_log['ast']
@@ -62,7 +62,7 @@ class StatsBuilder:
 
         return player_metrics
     
-    def compute_engineered_features(season_year: str):
+    def compute_engineered_features(self, season_year: str):
         sql_query = """
             WITH team_totals AS (
                 SELECT DISTINCT
