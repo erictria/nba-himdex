@@ -8,8 +8,8 @@ from lib.db_conn import copy_df_to_sql
 from lib.stats_builder import StatsBuilder
 
 STATS = StatsBuilder()
-CLUST_TABLE = 'nba_him_clust'
-schema = 'himdex'
+CLUST_TABLE = 'nba_himdex'
+SCHEMA = 'stats'
 
 def ingest_season_him(season_id: str):
     '''
@@ -28,7 +28,8 @@ def ingest_season_him(season_id: str):
     ]
 
     # Need max 10 players per cluster
-    clusters = len(season_data) // 10
+    len_records = len(season_data)
+    clusters = len_records // 10
 
     data = season_data[model_features]
     himdex_kmeans = HimdexKMeans(data)
@@ -38,7 +39,15 @@ def ingest_season_him(season_id: str):
         random_state = 2016
     )
 
-    # breakpoint()
+    season_data['himdex_cluster'] = labels
+    season_data['version'] = 1
+
+    copy_df_to_sql(
+        df = season_data,
+        table = CLUST_TABLE,
+        schema = SCHEMA
+    )
+    print(f'DONE ingesting HIM for season: {season_id}, rows: {len_records}')
 
 if __name__ == '__main__':
     season_id = '2015-16'

@@ -109,13 +109,14 @@ class StatsBuilder:
             )
             , career_stats AS (
                 SELECT
-                    c.season_id AS season_year
-                    , c.player_id
-                    , c.team_id
-                    , c.min AS average_min
-                    , c.fgm + c.ftm + c.ast AS average_buckets
-                    , c.dreb + c.stl + c.blk AS average_stops
-                FROM raw."player_career_stats" AS c
+                    p.season_year
+                    , p.player_id
+                    , p.team_id
+                    , AVG(player_min) AS average_min
+                    , AVG(player_buckets) AS average_buckets
+                    , AVG(player_stops) AS average_stops
+                FROM player_totals p
+                GROUP BY 1, 2, 3
             )
             , player_uplifts AS (
                 SELECT
@@ -123,8 +124,14 @@ class StatsBuilder:
                     , e.bucket_contribution * 100.0 :: float as bucket_contribution_rate
                     , e.stop_contribution * 100.0 :: float as stop_contribution_rate
                     , c.average_min
-                    , ((e.player_buckets - c.average_buckets) / c.average_buckets) :: float AS bucket_uplift
-                    , ((e.player_stops - c.average_stops) / c.average_stops) :: float AS stop_uplift
+                    , CASE
+                        WHEN c.average_buckets = 0 THEN 0
+                        ELSE ((e.player_buckets - c.average_buckets) / c.average_buckets)
+                    END :: float AS bucket_uplift
+                    , CASE
+                        WHEN c.average_stops = 0 THEN 0
+                        ELSE ((e.player_stops - c.average_stops) / c.average_stops)
+                    END :: float AS stop_uplift
                 FROM engineered_stats e
                 JOIN career_stats c ON e.player_id = c.player_id AND e.team_id = c.team_id AND e.season_year = c.season_year
             )
