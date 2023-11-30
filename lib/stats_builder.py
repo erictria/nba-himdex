@@ -149,8 +149,8 @@ class StatsBuilder:
             , engineered_raw AS (
                 SELECT
                     p.*
-                    , ((u.total_bucket_uplift - p.bucket_uplift) / u.total_players) * p.min_percentage :: float AS tmt_bucket_uplift_cont_rate
-                    , ((u.total_stop_uplift - p.stop_uplift) / u.total_players) * p.min_percentage :: float AS tmt_stop_uplift_cont_rate
+                    , ((u.total_bucket_uplift - p.bucket_uplift) / (u.total_players - 1)) * p.min_percentage :: float AS tmt_bucket_uplift_cont_rate
+                    , ((u.total_stop_uplift - p.stop_uplift) / (u.total_players - 1)) * p.min_percentage :: float AS tmt_stop_uplift_cont_rate
                 FROM player_uplifts p
                 JOIN uplift_aggs u ON p.team_id = u.team_id AND p.game_id = u.game_id AND p.season_year = u.season_year
             )

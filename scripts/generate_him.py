@@ -11,6 +11,9 @@ STATS = StatsBuilder()
 CLUST_TABLE = 'nba_himdex'
 SCHEMA = 'stats'
 
+RANDOM_STATE = 2016
+MAX_ITER = 500
+
 def ingest_season_him(season_id: str):
     '''
     PURPOSE: ingest HIM clustering values
@@ -35,8 +38,8 @@ def ingest_season_him(season_id: str):
     himdex_kmeans = HimdexKMeans(data)
     labels = himdex_kmeans.generate_labels(
         clusters = clusters,
-        max_iter = 500,
-        random_state = 2016
+        max_iter = MAX_ITER,
+        random_state = RANDOM_STATE
     )
 
     season_data['himdex_cluster'] = labels
@@ -50,7 +53,26 @@ def ingest_season_him(season_id: str):
     print(f'DONE ingesting HIM for season: {season_id}, rows: {len_records}')
 
 if __name__ == '__main__':
-    season_id = '2015-16'
-    ingest_season_him(season_id)
+    seasons = [
+        '2008-09',
+        '2009-10',
+        '2010-11',
+        '2011-12',
+        '2012-13',
+        '2013-14',
+        '2014-15',
+        '2015-16',
+        '2016-17',
+        '2017-18',
+        '2018-19',
+        '2019-20',
+        '2020-21',
+        '2021-22',
+        '2022-23',
+    ]
+    for season_id in seasons:
+        print(f'STARTING with {season_id}...')
+        ingest_season_him(season_id)
+        print(f'DONE with {season_id}!')
 
 

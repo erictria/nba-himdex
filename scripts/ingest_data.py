@@ -85,8 +85,26 @@ def ingest_player_stats():
     print(f'DONE ingesting for players: {len_players}, rows: {len_records}')
 
 if __name__ == '__main__':
-    season_id = '2015-16'
-    # ingest_team_games(season_id)
-    # ingest_player_games(season_id)
-    ingest_player_stats()
+    seasons = [
+        '2008-09',
+        '2009-10',
+        '2010-11',
+        '2011-12',
+        '2012-13',
+        '2013-14',
+        '2014-15',
+        '2015-16',
+        '2016-17',
+        '2017-18',
+        '2018-19',
+        '2019-20',
+        '2020-21',
+        '2021-22',
+        '2022-23',
+    ]
+    for season_id in seasons:
+        print(f'STARTING with {season_id}...')
+        ingest_team_games(season_id)
+        ingest_player_games(season_id)
+        print(f'DONE with {season_id}!')
 
