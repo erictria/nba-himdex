@@ -67,7 +67,7 @@ def psql_insert_copy(table, conn, keys, data_iter):
         sql = 'COPY {} ({}) FROM STDIN WITH CSV'.format(table_name, columns)
         cur.copy_expert(sql = sql, file = s_buf)
 
-def copy_df_to_sql(df: pd.DataFrame, table: str, schema: str, if_exists: str = 'append', con = DB_CONN):
+def copy_df_to_sql(df: pd.DataFrame, table: str, schema: str, if_exists: str = 'append', columns: list = [], con = DB_CONN):
     '''
     PURPOSE: Ingests a table to PostgreSQL using COPY
 
@@ -81,6 +81,9 @@ def copy_df_to_sql(df: pd.DataFrame, table: str, schema: str, if_exists: str = '
 
     df.columns = df.columns.str.lower()
     df.columns = df.columns.to_series().apply(clean_columns_names)
+    if len(columns) > 0:
+        df = df[columns]
+        
     df.to_sql(
         table,
         schema = schema,
@@ -126,3 +129,26 @@ def read_sql_to_df(query: str, con = DB_CONN) -> pd.DataFrame:
     result_df = pd.read_sql_query(query, con = con)
 
     return result_df
+
+def get_table_columns(schema: str, table_name: str, con = DB_CONN) -> list:
+    '''
+    PURPOSE: gets the column names of a specified table
+
+    INPUT:
+    schema - str schema
+    table_name - str table name
+    con - db connection
+
+    OUTPUT:
+    table_columns - list of string table columns
+    '''
+
+    query = f"""
+        SELECT *
+        FROM {schema}.{table_name}
+        LIMIT 1
+    """
+    result_df = pd.read_sql_query(query, con = con)
+    table_columns = result_df.columns.tolist()
+
+    return table_columns

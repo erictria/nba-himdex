@@ -3,7 +3,10 @@ import sys
 
 sys.path.append('..')
 
-from lib.db_conn import copy_df_to_sql
+from lib.db_conn import (
+    copy_df_to_sql,
+    get_table_columns
+)
 from lib.nba_helper import NbaHelper
 
 NBA = NbaHelper()
@@ -29,10 +32,17 @@ def ingest_team_games(season_id: str):
     len_teams = len(team_dfs)
     full_df = pd.concat(team_dfs)
     len_records = len(full_df)
+
+    table_columns = get_table_columns(
+        schema = SCHEMA,
+        table_name = TEAM_STATS_TBL
+    )
+
     copy_df_to_sql(
         df = full_df,
         table = TEAM_STATS_TBL,
-        schema = SCHEMA
+        schema = SCHEMA,
+        columns = table_columns
     )
     print(f'DONE ingesting for season: {season_id}, teams: {len_teams}, rows: {len_records}')
 
@@ -53,10 +63,17 @@ def ingest_player_games(season_id: str):
     len_teams = len(team_dfs)
     full_df = pd.concat(team_dfs)
     len_records = len(full_df)
+
+    table_columns = get_table_columns(
+        schema = SCHEMA,
+        table_name = PLAYER_STATS_TBL,
+    )
+
     copy_df_to_sql(
         df = full_df,
         table = PLAYER_STATS_TBL,
-        schema = SCHEMA
+        schema = SCHEMA,
+        columns = table_columns
     )
     print(f'DONE ingesting for season: {season_id}, teams: {len_teams}, rows: {len_records}')
 

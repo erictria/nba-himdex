@@ -63,7 +63,7 @@ class StatsBuilder:
         return player_metrics
     
     def compute_engineered_features(self, season_year: str):
-        sql_query = """
+        sql_query = f"""
             WITH team_totals AS (
                 SELECT DISTINCT
                     t.season_year
@@ -168,6 +168,7 @@ class StatsBuilder:
                 , AVG(tmt_bucket_uplift_cont_rate) AS avg_tmt_bucket_uplift_contribution_rate
                 , AVG(tmt_stop_uplift_cont_rate) AS avg_tmt_stop_uplift_contribution_rate
             FROM engineered_raw
+            WHERE season_year = '{season_year}'
             GROUP BY 1, 2, 3, 4, 5
             ORDER BY 1, 2, 3, 4, 5
         """

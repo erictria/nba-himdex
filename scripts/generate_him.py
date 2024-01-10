@@ -1,5 +1,6 @@
 import pandas as pd
 import sys
+import time
 
 sys.path.append('..')
 
@@ -44,6 +45,7 @@ def ingest_season_him(season_id: str):
 
     season_data['himdex_cluster'] = labels
     season_data['version'] = 1
+    season_data['ingestion_timestamp'] = int(time.time())
 
     copy_df_to_sql(
         df = season_data,
