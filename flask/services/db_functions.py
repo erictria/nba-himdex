@@ -106,7 +106,7 @@ def get_himdex_cluster_by_player(player_id: int) -> list:
 
         SELECT
             nh.season_year
-            , nh_team_id
+            , nh.team_id
             , nh.team_abbreviation
             , nh.player_id
             , nh.player_name
@@ -149,7 +149,7 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str) -> lis
 
         SELECT
             nh.season_year
-            , nh_team_id
+            , nh.team_id
             , nh.team_abbreviation
             , nh.player_id
             , nh.player_name
@@ -167,3 +167,40 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str) -> lis
     him_players = read_sql_records(query = query)
 
     return him_players
+
+def get_himdex_player(player_id: int, season_year: str, team_id: int) -> list:
+    '''
+    PURPOSE: gets the cluster stats of a specified player
+
+    INPUTS:
+    player_id - int player id
+    season_year - str season year
+    team_id - int team id
+
+    OUTPUTS:
+    him_player - dict with player and himdex info
+    '''
+    
+    query = f'''
+        SELECT
+            nh.season_year
+            , nh.team_id
+            , nh.team_abbreviation
+            , nh.player_id
+            , nh.player_name
+            , nh.average_min
+            , nh.total_plus_minus
+            , nh.avg_bucket_contribution_rate
+            , nh.avg_stop_contribution_rate
+            , nh.avg_tmt_bucket_uplift_contribution_rate
+            , nh.avg_tmt_stop_uplift_contribution_rate
+        FROM {DB_SCHEMA}.nba_himdex nh
+        WHERE nh.player_id = {player_id}
+        AND nh.season_year = '{season_year}'
+        AND nh.team_id = {team_id}
+    '''
+
+    him_players = read_sql_records(query = query)
+    him_player = him_players[0]
+
+    return him_player

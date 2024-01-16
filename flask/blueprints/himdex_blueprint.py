@@ -3,14 +3,14 @@ from flask import(
     request,
     jsonify
 )
-import pandas as pd
 
 from services.db_functions import (
     get_all_seasons,
     get_players_by_season,
-    get_himdex_cluster_by_player,
-    get_himdex_cluster_by_player_season
+    get_himdex_cluster_by_player_season,
+    get_himdex_player
 )
+from services.nba_functions import get_pictures
 
 himdex_blueprint = Blueprint('himdex_blueprint', __name__)
 
@@ -39,7 +39,7 @@ def get_players():
     return jsonify(response), 200
 
 @himdex_blueprint.route('/api/get_himdex_cluster', methods = ['GET'])
-def get_players():
+def get_himdex_cluster():
     body = request.get_json()
 
     season_year = body['season_year']
@@ -48,11 +48,35 @@ def get_players():
         player_id = player_id,
         season_year = season_year
     )
+    him_players = list(map(lambda x: get_pictures(x), him_players))
 
     response = {
         'season_year': season_year,
         'player_id': player_id,
         'him_players': him_players
+    }
+
+    return jsonify(response), 200
+
+@himdex_blueprint.route('/api/get_player', methods = ['GET'])
+def get_player():
+    body = request.get_json()
+
+    season_year = body['season_year']
+    player_id = body['player_id']
+    team_id = body['team_id']
+    him_player = get_himdex_player(
+        player_id = player_id,
+        season_year = season_year,
+        team_id = team_id
+    )
+    him_player = get_pictures(him_player)
+
+    response = {
+        'season_year': season_year,
+        'player_id': player_id,
+        'team_id': team_id,
+        'him_player': him_player
     }
 
     return jsonify(response), 200
