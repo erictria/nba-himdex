@@ -125,13 +125,14 @@ def get_himdex_cluster_by_player(player_id: int) -> list:
 
     return him_players
 
-def get_himdex_cluster_by_player_season(player_id: int, season_year: str) -> list:
+def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_id: int) -> list:
     '''
     PURPOSE: gets the players in the him cluster of a specified player
 
     INPUTS:
     player_id - int player id
     season_year - str season year
+    team_id - int team id
 
     OUTPUTS:
     him_players - list of dict with player and himdex info
@@ -145,6 +146,7 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str) -> lis
             FROM {DB_SCHEMA}.nba_himdex
             WHERE player_id = {player_id}
             AND season_year = '{season_year}'
+            AND team_id = {team_id}
         )
 
         SELECT
