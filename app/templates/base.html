@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NBA Himdex</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bulma.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+    <link rel="icon" href="{{url_for('static', filename='img/icon.png')}}">
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item" href="/">
+                                Home
+                            </a>
+                            <a class="navbar-item" href="/about">
+                                About
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- WORKING -->
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+        <!-- WORKING -->
+    </section>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='js/him.js') }}"></script>
+</body>
+
+</html>

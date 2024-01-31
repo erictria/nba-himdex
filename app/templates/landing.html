@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  NBA Himdex
+</h1>
+<h2 class="subtitle">
+  Who is HIM?
+</h2>
+<br>
+
+<div class="card">
+  <h5 class="card-header">Select HIM</h5>
+  <div class="card-body">
+      <h6 class="card-title">Season:</h6>
+      <select id="season_dropdown" class="btn btn-dropdown" style="display: block;">
+          {% for season in seasons %}
+          <option value="{{ season }}">{{ season }}</option>
+          {% endfor %}
+      </select>
+      <br>
+
+      <div id="toolbar">
+          <button id="search_players" class="btn btn-success">
+            <i class="fa fa-user-check"></i> Search Players
+          </button>
+      </div>
+      <br>
+
+      <h6 class="card-title">Who is HIM?</h6>
+      <select id="player_dropdown" class="btn btn-dropdown" style="display: block;">
+          <option value="Select Player">Select Player</option>
+      </select>
+      <br>
+
+      <div id="toolbar">
+        <button id="search_him_players" class="btn btn-success">
+          <i class="fa fa-user-check"></i> Load HIM Group
+        </button>
+    </div>
+    <br>
+
+      <!-- <h6 class="card-title">Description:</h6>
+      <input id = "job_description" type = "text" class = "btn btn-dropdown" style="text-align: left;"></input> -->
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header">NBA HIMdex</h5>
+   <div class="card-body" style="display: block; overflow-x: auto;">
+      <div class = "table-responsive">
+          <div id = "data-table-basic_wrapper" class = "dataTables_wrapper">
+              <table id = "himdex_table" class = "dataTable display" style = "white-space: nowrap;">
+                  <thead>
+                      <tr>
+                          <th>Team</th>
+                          <th></th>
+                          <th>Player</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody id = "table_body">
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+  
+  </div>
+
+</div>
+<br>
+{% endblock %}
