@@ -117,7 +117,7 @@ def get_himdex_cluster_by_player(player_id: int) -> list:
             , nh.avg_tmt_bucket_uplift_contribution_rate
             , nh.avg_tmt_stop_uplift_contribution_rate
         FROM {DB_SCHEMA}.nba_himdex nh
-        JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = nh.himdex_cluster
+        JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = hg.himdex_cluster
         ORDER BY 1, 2, 4
     '''
 
@@ -125,7 +125,7 @@ def get_himdex_cluster_by_player(player_id: int) -> list:
 
     return him_players
 
-def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_id: int) -> list:
+def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_id: int = None) -> list:
     '''
     PURPOSE: gets the players in the him cluster of a specified player
 
@@ -146,7 +146,6 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_i
             FROM {DB_SCHEMA}.nba_himdex
             WHERE player_id = {player_id}
             AND season_year = '{season_year}'
-            AND team_id = {team_id}
         )
 
         SELECT
@@ -162,7 +161,7 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_i
             , nh.avg_tmt_bucket_uplift_contribution_rate
             , nh.avg_tmt_stop_uplift_contribution_rate
         FROM {DB_SCHEMA}.nba_himdex nh
-        JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = nh.himdex_cluster
+        JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = hg.himdex_cluster
         ORDER BY 1, 2, 4
     '''
 

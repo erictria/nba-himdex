@@ -15,7 +15,7 @@ from services.nba_functions import get_pictures
 himdex_blueprint = Blueprint('himdex_blueprint', __name__)
 
 
-@himdex_blueprint.route('/api/get_seasons', methods = ['GET'])
+@himdex_blueprint.route('/api/get_seasons', methods = ['POST'])
 def get_seasons():
     seasons = get_all_seasons()
     response = {
@@ -24,7 +24,7 @@ def get_seasons():
 
     return jsonify(response), 200
 
-@himdex_blueprint.route('/api/get_players', methods = ['GET'])
+@himdex_blueprint.route('/api/get_players', methods = ['POST'])
 def get_players():
     body = request.get_json()
 
@@ -38,24 +38,23 @@ def get_players():
 
     return jsonify(response), 200
 
-@himdex_blueprint.route('/api/get_himdex_cluster', methods = ['GET'])
+@himdex_blueprint.route('/api/get_himdex_cluster', methods = ['POST'])
 def get_himdex_cluster():
     body = request.get_json()
 
     season_year = body['season_year']
     player_id = body['player_id']
-    team_id = body['team_id']
+    # team_id = body['team_id']
     him_players = get_himdex_cluster_by_player_season(
         player_id = player_id,
-        season_year = season_year,
-        team_id = team_id
+        season_year = season_year
     )
     him_players = list(map(lambda x: get_pictures(x), him_players))
 
     response = {
         'season_year': season_year,
         'player_id': player_id,
-        'team_id': team_id,
+        # 'team_id': team_id,
         'him_players': him_players
     }
 
