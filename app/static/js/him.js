@@ -23,18 +23,19 @@ function listSeasons() {
             console.log(xhr.responseText);
         },
     });
-}   
+}
 
 function listPlayers(season_year) {
     const obj = {"season_year": season_year};
     const myJSON = JSON.stringify(obj);
+
     $.ajax({
         type: 'POST',
-        url: '/api/get_players',
+        url: '/api/get_season_players',
         contentType: 'application/json; charset=utf-8',
         data: myJSON,
         success: function (response, textStatus, xhr) {
-            players = response['players']
+            players = response[season_year]
             console.log('Success: ' + textStatus)
 
             var player_select = document.getElementById("player_dropdown"); 
@@ -54,7 +55,38 @@ function listPlayers(season_year) {
             console.log(xhr.responseText);
         },
     });
-}   
+}
+
+// function listPlayers(season_year) {
+//     const obj = {"season_year": season_year};
+//     const myJSON = JSON.stringify(obj);
+//     $.ajax({
+//         type: 'POST',
+//         url: '/api/get_players',
+//         contentType: 'application/json; charset=utf-8',
+//         data: myJSON,
+//         success: function (response, textStatus, xhr) {
+//             players = response['players']
+//             console.log('Success: ' + textStatus)
+
+//             var player_select = document.getElementById("player_dropdown"); 
+
+//             for(var i = 0; i < players.length; i++) {
+//                 var player = players[i];
+//                 var el = document.createElement('option');
+//                 el.text = player['player_name'];
+//                 el.value = player['player_id'];
+//                 player_select.add(el);
+//             }
+
+//             // load drop down
+//         },
+//         error: function (xhr, XMLHttpRequest, textStatus) {
+//             console.log("Error: " + textStatus)
+//             console.log(xhr.responseText);
+//         },
+//     });
+// }   
 
 function listHimPlayers(season_year, player_id) {
     const obj = {"season_year": season_year, "player_id": player_id};

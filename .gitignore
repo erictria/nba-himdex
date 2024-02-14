@@ -7,6 +7,5 @@
 *.pdf
 *.rds
 *.xlsx
-*.png
 *.csv
 *.env

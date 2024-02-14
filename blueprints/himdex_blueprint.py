@@ -14,7 +14,6 @@ from services.nba_functions import get_pictures
 
 himdex_blueprint = Blueprint('himdex_blueprint', __name__)
 
-
 @himdex_blueprint.route('/api/get_seasons', methods = ['POST'])
 def get_seasons():
     seasons = get_all_seasons()
