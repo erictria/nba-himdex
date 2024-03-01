@@ -11,7 +11,7 @@ import pandas as pd
 
 from blueprints.himdex_blueprint import himdex_blueprint
 
-from services.db_functions import get_all_seasons
+from services.gbq_functions import get_all_seasons
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
 

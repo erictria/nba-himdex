@@ -4,7 +4,7 @@ from flask import(
     jsonify
 )
 
-from services.db_functions import (
+from services.gbq_functions import (
     get_all_seasons,
     get_players_by_season,
     get_himdex_cluster_by_player_season,
