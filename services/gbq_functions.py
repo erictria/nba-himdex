@@ -68,7 +68,7 @@ def get_all_seasons() -> list:
 
     return seasons
 
-def get_players_by_season(season_year: str) -> list:
+def get_players_by_season(season_year: str, order_by: str = 'player_id') -> list:
     '''
     PURPOSE: gets the list of all players from a given season
 
@@ -85,7 +85,7 @@ def get_players_by_season(season_year: str) -> list:
             , player_name
         FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex
         WHERE season_year = '{season_year}'
-        ORDER BY player_id
+        ORDER BY {order_by}
     '''
 
     players = read_gbq_records(query = query)

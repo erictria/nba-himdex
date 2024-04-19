@@ -4,7 +4,7 @@ import sys
 import sys
 sys.path.insert(0, '..')
 
-from services.db_functions import (
+from services.gbq_functions import (
     get_all_seasons,
     get_players_by_season
 )
@@ -13,7 +13,7 @@ def generate_season_players():
     seasons = get_all_seasons()
     season_players = {}
     for season in seasons:
-        players = get_players_by_season(season_year = season)
+        players = get_players_by_season(season_year = season, order_by = 'player_name')
         season_players[season] = players
     
     with open('season_players.json', 'w') as fp:

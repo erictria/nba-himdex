@@ -122,7 +122,7 @@ function loadTable(data) {
             { "data": "player_name"},
             { "data": "player_headshot",
               "render": function(data, type, row) {
-                return '<img src="' + data + '" />';
+                return '<img src="' + data + '" alt="Image Unavailable" class="table-image" />';
             }}
             // { "data": "average_min"},
             // { "data": "total_plus_minus"},
