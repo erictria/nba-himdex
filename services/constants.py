@@ -17,3 +17,6 @@ DB_CHUNK_SIZE = 1000
 # stats - feature engineered data
 
 DB_SCHEMA = 'stats'
+
+GCP_PROJECT = os.getenv('GCP_PROJECT')
+GCP_SCHEMA = os.getenv('GCP_SCHEMA')

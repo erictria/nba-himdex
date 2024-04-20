@@ -4,7 +4,7 @@ from flask import(
     jsonify
 )
 
-from services.db_functions import (
+from services.gbq_functions import (
     get_all_seasons,
     get_players_by_season,
     get_himdex_cluster_by_player_season,
@@ -13,7 +13,6 @@ from services.db_functions import (
 from services.nba_functions import get_pictures
 
 himdex_blueprint = Blueprint('himdex_blueprint', __name__)
-
 
 @himdex_blueprint.route('/api/get_seasons', methods = ['POST'])
 def get_seasons():

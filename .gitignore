@@ -3,10 +3,9 @@
 *.ipynb_checkpoints
 */.ipynb_checkpoints/*
 *.pyc
-*.txt
 *.pdf
 *.rds
 *.xlsx
-*.png
 *.csv
 *.env
+*credentials/*

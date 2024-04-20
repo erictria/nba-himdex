@@ -762,3 +762,8 @@ table.dataTable td {
 .spanner.show, .overlay.show {
 	opacity: 1
 }
+
+.table-image {
+  height: 50;
+  width: 50;
+}
