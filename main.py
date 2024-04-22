@@ -28,6 +28,10 @@ def index():
         seasons = seasons
     )
 
+@app.route('/bootstrap')
+def bootstrap():
+    return render_template('index.html')
+
 @app.route('/api/get_season_players', methods = ['POST'])
 def get_season_players():
     filename = os.path.join(app.static_folder, 'data', 'season_players.json')

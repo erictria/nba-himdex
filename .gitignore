@@ -9,3 +9,4 @@
 *.csv
 *.env
 *credentials/*
+*nba_venv*

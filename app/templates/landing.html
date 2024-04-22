@@ -1,44 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  NBA Himdex
-</h1>
-<h2 class="subtitle">
-  Who is HIM?
-</h2>
+<br>
+<div class="row">
+  <div class="col-md-1">
+    <img src="{{url_for('static', filename='img/icon.png')}}" height="150" width="75">
+    <!-- https://andscape.com/features/new-nba-logo/ -->
+  </div>
+  <div class="col-md-6">
+    <h1 class="title">
+      NBA Himdex
+    </h1>
+    <h3 class="subtitle">
+      Who is HIM?
+    </h3>
+  </div>
+</div>
 <br>
 
 <div class="card">
   <h5 class="card-header">Select HIM</h5>
   <div class="card-body">
-      <h6 class="card-title">Season:</h6>
-      <select id="season_dropdown" class="btn btn-dropdown" style="display: block;">
-          {% for season in seasons %}
-          <option value="{{ season }}">{{ season }}</option>
-          {% endfor %}
-      </select>
-      <br>
-
-      <div id="toolbar">
-          <button id="search_players" class="btn btn-success">
-            <i class="fa fa-user-check"></i> Search Players
-          </button>
+      <div class="row">
+        <div class="col-md-2">
+          <h6 class="card-title">Season:</h6>
+        </div>
+        <div class="col-md-4">
+          <select id="season_dropdown" class="dropdown-menu" style="display: block;">
+            {% for season in seasons %}
+            <option value="{{ season }}">{{ season }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div id="toolbar">
+            <button id="search_players" class="btn btn-success">
+              <i class="fa fa-user-check"></i> Search Players
+            </button>
+          </div>
+        </div>
       </div>
       <br>
 
-      <h6 class="card-title">Who is HIM?</h6>
-      <select id="player_dropdown" class="btn btn-dropdown" style="display: block;">
-          <option value="Select Player">Select Player</option>
-      </select>
+      <div class="row">
+        <div class="col-md-2">
+          <h6 class="card-title">Player:</h6>
+        </div>
+        <div class="col-md-4">
+          <select id="player_dropdown" class="dropdown-menu" style="display: block;">
+              <option value="Select Player">Select Player</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div id="toolbar">
+            <button id="search_him_players" class="btn btn-success">
+              <i class="fa fa-user-check"></i> Load HIM Group
+            </button>
+          </div>
+        </div>
+      </div>
       <br>
-
-      <div id="toolbar">
-        <button id="search_him_players" class="btn btn-success">
-          <i class="fa fa-user-check"></i> Load HIM Group
-        </button>
-    </div>
-    <br>
 
       <!-- <h6 class="card-title">Description:</h6>
       <input id = "job_description" type = "text" class = "btn btn-dropdown" style="text-align: left;"></input> -->
