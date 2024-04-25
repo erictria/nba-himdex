@@ -1,0 +1,16 @@
+.table-image {
+    height: 50;
+    width: 50;
+}
+
+.default-font {
+    font-family: 'Helvetica', 'Arial', sans-serif;  
+}
+
+.main-color {
+    background-color: #e36505;
+}
+
+.sub-color {
+    background-color: #fba665;
+}
