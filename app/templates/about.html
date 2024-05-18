@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col-md-1">
+    <img src="{{url_for('static', filename='img/icon.png')}}" height="150" width="75">
+  </div>
+  <div class="col-md-6">
+    <h1 class="title default-font">
+      <strong>NBA HIMdex</strong>
+    </h1>
+    <h3 class="subtitle default-font">
+      What is it?
+    </h3>
+    <p>
+      A fun experiment to measure the subjective topic of <b>who's HIM</b>.
+    </p>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">Context</h5>
+  <div class="card-body">
+      <h6>
+        In recent years, being referred to as <b>HIM</b> has been a popular topic in basketball discourse. 
+        The conditions for being called HIM, however, is very subjective.<br><br>
+        Usually, players are referred to as HIM if they make big shots, make big plays, and impact the game in a certain way. 
+        The subjective part comes from each player (or fan) having a different perspective of what impact in the game they like.<br><br>
+        Let's take LeBron James as an example. There have been numerous times where he took to social media (Instagram Stories, Twitter/X)
+        to call his teammates or former teammates HIM or H.I.M. (Some might say it's his <a href="https://www.youtube.com/watch?v=Yy1Iq0kPPYU">favorite saying</a>).
+        The list includes Kyrie Irving, Anthony Davis, etc. One of the more infamous ones is this tweet/post right here:
+      </h6>
+
+      <div class="centered-container">
+        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">He’s so SPECIAL!!! He’s HIM <a href="https://t.co/rDIjp7SDXt">https://t.co/rDIjp7SDXt</a></p>&mdash; LeBron James (@KingJames) <a href="https://twitter.com/KingJames/status/1470557504606142464?ref_src=twsrc%5Etfw">December 14, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <br>
+
+      <h6>
+        LeBron has also gone on record to call himself HIM.
+      </h6>
+      <br>
+      
+      <div class="video-wrapper">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/XWpiCOFA3jg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <br>
+
+      <h6>
+        We can actually stop right here because maybe LeBron has been HIM all along...
+      </h6>
+      <br>
+
+      <div class="centered-container">
+        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Maybe It’s Me</p>&mdash; LeBron James (@KingJames) <a href="https://twitter.com/KingJames/status/1622394143912919041?ref_src=twsrc%5Etfw">February 6, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <br>
+
+      <h6>
+        But no, we will proceed. I used this scenario, LeBron being HIM and referring to others as HIM, as the premise for this project.
+        Simply put, <b>it takes one to know one</b>. If a player is deemed HIM, other players who impact the game in similar ways are also HIM.
+        This is the main concept of this project.<br><br>
+
+        <b>BONUS:</b> here's a fan at the 2023 FIBA World Cup in Manila sharing his thoughts on who's HIM:
+      </h6>
+      <br>
+
+      <div class="video-wrapper">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Ao_CTdYOe7Y?start=22&end=41" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <br>
+
+      <h6>
+        Shoutout to the Pinoy fans, man.
+      </h6>
+
+  </div>
+</div>
+<br>
+
+<div class="card">
+    <h5 class="card-header text-white sub-color default-font">Metrics</h5>
+    <div class="card-body">
+        <h6>
+          For this project, I focused on 4 engineered metrics.<br><br>
+
+          <b>1. Bucket Contribution Rate</b><br><br>
+
+          I used the sum of all the counting statistics that lead to a bucket: field goals, free throws, and assists.
+          A player's bucket contribution rate is then the player's total divided by the team's total in a game.<br><br>
+
+          I used buckets as a main concept because as the late great Bill Russell once said, 
+          "this game has always been, and will always be, about <b>buckets</b>."
+        </h6>
+        <br>
+
+        <div class="video-wrapper">
+          <div class="video-container">
+              <iframe src="https://www.youtube.com/embed/-xYejfYxT4s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <br>
+
+        <h6>
+          (Scene from the Uncle Drew movie)<br><br>
+
+          <b>2. Stop Contribution Rate</b><br><br>
+
+          Along with buckets, I measured defensive stops to keep it balanced. As Cavs legend Austin Carr will always say, "it's stop and score time".
+        </h6>
+        <br>
+
+        <div class="centered-container">
+          <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Do Cavs have enough to close it out, it's stop and score Time</p>&mdash; Austin Carr (@MrCavalier34) <a href="https://twitter.com/MrCavalier34/status/1610099028347297792?ref_src=twsrc%5Etfw">January 3, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+        <br>
+
+        <h6>
+          For stops, I took the sum of counting statistics that end an opponent possession: blocks, steals, and defensive rebounds.
+          The contribution rate is computed similarly as for buckets.<br><br>
+
+          For the next two metrics, I attempted to measure how a player's performance boosts the performance of his teammates.
+          This is when a player is so locked in that his teammates also play better than their usual standards.<br><br>
+
+          This phenomenom is best shown in one of the final scenes of the basketball anime, Kuroko no Basket. 
+          The star player, Kagami Taiga, was so locked in that he entered <i>the zone</i>. His teammates followed his lead which led to better synergy and overall improved play:
+        </h6>
+        <br>
+  
+        <div class="video-wrapper">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/0vEIDij8Q9k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <br>
+
+        <h6>
+          (Scene from Kuroko no Basket)<br><br>
+
+          The NBA equivalent for this that comes to mind is when the Cavs went on a huge run to beat the Pacers in Game 3 of the 2017 first round.
+          The run was sparked by LeBron James, but the other Cavs players were also on fire, hitting big shots and making crucial defensive plays.
+          (Shoutout to Channing Frye and Kyle Korver for making those huge threes down the stretch).
+        </h6>
+        <br>
+
+        <div class="video-wrapper">
+          <div class="video-container">
+              <iframe src="https://www.youtube.com/embed/UlMh3bZYamo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <br>
+
+        <h6>
+          <b>3. Teammate Bucket Boost Contribution Rate</b><br><br>
+
+          For the selected player, I attempted to quantify this by doing the following:<br>
+          - Got each teammate's percent difference of buckets in a game vs average buckets per game.<br>
+          - Got the average bucket boost for all the teammates that played in a game.<br>
+          - Adjusted the average teammate bucket boost by the selected player's minutes played in that game.<br><br>
+
+          <b>4. Teammate Stop Boost Contribution Rate</b><br><br>
+
+          The computation here is similar to the previous one, except replace buckets with stops.<br><br>
+
+          These contribution rates are an attempt to quantify that Kuroko No Basket phenomenon. 
+          However, since the computation ended up being a percentage of a percentage, the values ended up being very small.
+          This is something I would like to improve in future versions of the HIMdex.<br><br>
+
+          Finally, to generate the HIM groups (similar players), I also use total plus minus and minutes per game.<br><br>
+
+          <b>Summary:</b>
+        </h6>
+        <br>
+
+        <div class = "table-responsive">
+          <div id = "data-table-basic_wrapper" class = "dataTables_wrapper">
+              <table class = "dataTable display" style = "white-space: nowrap;">
+                  <thead>
+                      <tr>
+                          <th>Metric</th>
+                          <th>Description</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>Bucket Contribution Rate</td>
+                        <td>Percentage of a team's buckets attributed to a player.</td>
+                    </tr>
+                    <tr>
+                        <td>Stop Contribution Rate</td>
+                        <td>Percentage of a team's stops attributed to a player.</td>
+                    </tr>
+                    <tr>
+                        <td>Teammate Bucket Boost Contribution Rate</td>
+                        <td>Percentage of teammates' boost in buckets <b>roughly</b> attributed to a player.</td>
+                    </tr>
+                    <tr>
+                        <td>Teammate Stop Boost Contribution Rate</td>
+                        <td>Percentage of teammates' boost in stops <b>roughly</b> attributed to a player.</td>
+                    </tr>
+                  </tbody>
+              </table>
+          </div>
+        </div>
+
+    </div>
+  </div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">Coming Soon</h5>
+  <div class="card-body">
+      <h6>
+        - HIMdex scores and rankings for each player per season.<br>
+        - Separate HIMdexes for the Regular Season and Playoffs.<br>
+        - A more sophisticated way for computing the Teammate Bucket/Stop Boost Contribution Rate metrics.
+      </h6>
+      
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">About Me</h5>
+  <div class="card-body">
+      <h6>
+        - Name: Eric<br>
+        - Bio: Cavs and LeBron fan since 2008. <b>Cavs in 6.</b><br>
+        - Claim to Fame: I got a "Go Cavs" from the legend himself, Austin Carr.
+      </h6>
+      <div class="centered-container">
+        <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Yes time to Throw the Hammer Down. Go Cavs <a href="https://t.co/vxpoes6sPg">https://t.co/vxpoes6sPg</a></p>&mdash; Austin Carr (@MrCavalier34) <a href="https://twitter.com/MrCavalier34/status/1717321537072541894?ref_src=twsrc%5Etfw">October 25, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <h6>
+        - GitHub: <a href="https://github.com/erictria">erictria</a>
+      </h6>
+      
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">References</h5>
+  <div class="card-body">
+      <h6>
+        - All NBA statistics are acquired using the <a href="https://github.com/swar/nba_api">nba_api</a> package, by Swar Patel.<br>
+        - All player and team photos are from the <a href="https://www.nba.com/">NBA website</a>.<br>
+        - The logo used for the website is from Andscape's <a href="https://andscape.com/features/new-nba-logo/">New NBA Logo article</a>, by Aaron Dodson.
+      </h6>
+  </div>
+</div>
+<br>
+{% endblock %}

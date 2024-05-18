@@ -12,9 +12,49 @@
 }
 
 .sub-color {
-    background-color: #6F2633;
+    background-color: #860038;
 }
 
 .btn-color {
-    background-color: #FFB81C;
+    background-color: #BC945C;
+}
+
+.bg-color {
+    background-color: #f6f6f6;
+}
+
+.video-wrapper {
+    width: 720px; /* Set the desired width */
+    margin: auto; /* Center the video */
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically if needed */
+    /* height: 100vh;          Full viewport height to center vertically */
+    text-align: center;     /* Center text inside the blockquote */
+}
+
+.centered-container blockquote {
+    max-width: 500px;       /* Set a max width for the blockquote */
+    width: 100%;            /* Ensure the blockquote takes full width available */
+    margin: auto;           /* Center horizontally */
 }

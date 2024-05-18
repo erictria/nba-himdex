@@ -148,12 +148,12 @@ function loadTable(data) {
             var rowData = row.data();
             var hiddenData = '<div>' +
                              '<b>' + rowData.player_name + ', ' + rowData.team_abbreviation + '</b><br>' + 
-                             'Minutes per Game: ' + rowData.average_min.toFixed(2) + '<br>' +
+                             'Minutes Per Game: ' + rowData.average_min.toFixed(2) + '<br>' +
                              'Total Plus Minus: ' + rowData.total_plus_minus + '<br>' +
                              'Average Bucket Contribution Rate: ' + rowData.avg_bucket_contribution_rate.toFixed(2) + '% <br>' +
                              'Average Stop Contribution Rate: ' + rowData.avg_stop_contribution_rate.toFixed(2) + '% <br>' +
-                             'Average Teammate Bucket Uplift Contribution Rate: ' + rowData.avg_tmt_bucket_uplift_contribution_rate.toFixed(4) + '% <br>' +
-                             'Average Teammate Stop Uplift Contribution Rate: ' + rowData.avg_tmt_stop_uplift_contribution_rate.toFixed(4) + '% <br>' +
+                             'Average Teammate Bucket Boost Contribution Rate: ' + rowData.avg_tmt_bucket_uplift_contribution_rate.toFixed(4) + '% <br>' +
+                             'Average Teammate Stop Boost Contribution Rate: ' + rowData.avg_tmt_stop_uplift_contribution_rate.toFixed(4) + '% <br>' +
                              '</div>';
             row.child(hiddenData).show();
             tr.addClass('shown');
