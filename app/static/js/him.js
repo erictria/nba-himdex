@@ -35,31 +35,32 @@ function listPlayers(season_year) {
         contentType: 'application/json; charset=utf-8',
         data: myJSON,
         success: function (response, textStatus, xhr) {
-            players = response[season_year]
-            console.log('Success: ' + textStatus)
+            players = response[season_year];
+            console.log('Success: ' + textStatus);
 
-            var player_select = document.getElementById("player_dropdown"); 
+            var player_select = $('#player_dropdown'); 
 
             // Clear existing options
-            player_select.innerHTML = '';
+            player_select.empty();
 
             // Add a default 'Select Player' option
-            var defaultOption = document.createElement('option');
-            defaultOption.text = 'Select Player';
-            defaultOption.value = '';
-            player_select.add(defaultOption);
+            player_select.append(new Option('Select Player', ''));
 
             // Populate the dropdown with new options
             for(var i = 0; i < players.length; i++) {
                 var player = players[i];
+                // var el = new Option(player['player_name'], player['player_id']);
                 var el = document.createElement('option');
                 el.text = player['player_name'];
                 el.value = player['player_id'];
-                player_select.add(el);
+                player_select.append(el);
             }
+
+            // Refresh the Select2 dropdown
+            player_select.trigger('change');
         },
         error: function (xhr, XMLHttpRequest, textStatus) {
-            console.log("Error: " + textStatus)
+            console.log("Error: " + textStatus);
             console.log(xhr.responseText);
         },
     });
@@ -88,17 +89,6 @@ function listHimPlayers(season_year, player_id) {
 }   
 
 // const backup_img = "https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png"
-
-// function imageExists(url, callback) {
-//     var img = new Image();
-//     img.onload = function() {
-//         callback(true);
-//     };
-//     img.onerror = function() {
-//         callback(false);
-//     };
-//     img.src = url;
-// }
 
 function loadTable(data) {
     var table = $('#himdex_table').DataTable({
@@ -160,6 +150,20 @@ function loadTable(data) {
         }
     });
 }; 
+
+$(document).ready(function() {
+    $('#player_dropdown').select2({
+        placeholder: 'Select Player',
+        allowClear: true
+    });
+});
+
+$(document).ready(function() {
+    $('#season_dropdown').select2({
+        placeholder: 'Select Season',
+        allowClear: true
+    });
+});
 
 $search_players.click(function () {
     season = $season_dropdown.val()

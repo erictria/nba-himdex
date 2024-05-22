@@ -17,7 +17,7 @@
     <p>
       Choose the player you think is <b>HIM</b> and find out who else is HIM.<br>
       In other words, who else impacts the game in a similar way?<br>
-      Learn more about it <a href="/about">here</a>!
+      Learn more about it <a href="/about" class="a-style">here</a>!
     </p>
   </div>
 </div>
@@ -31,7 +31,7 @@
           <h6 class="card-title default-font">Season:</h6>
         </div>
         <div class="col-md-4">
-          <select id="season_dropdown" class="dropdown-menu" style="display: block;">
+          <select id="season_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
             {% for season in seasons %}
             <option value="{{ season }}">{{ season }}</option>
             {% endfor %}
@@ -52,7 +52,7 @@
           <h6 class="card-title default-font">Player:</h6>
         </div>
         <div class="col-md-4">
-          <select id="player_dropdown" class="dropdown-menu" style="display: block;">
+          <select id="player_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
               <option value="Select Player">Select Player</option>
           </select>
         </div>
