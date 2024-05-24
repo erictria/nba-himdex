@@ -28,7 +28,7 @@ def get_players():
     body = request.get_json()
 
     season_year = body['season_year']
-    players = get_players_by_season(season_year = season_year)
+    players = get_players_by_season(season_year = season_year, order_by = 'player_name')
 
     response = {
         'season_year': season_year,
@@ -49,6 +49,10 @@ def get_himdex_cluster():
         season_year = season_year
     )
     him_players = list(map(lambda x: get_pictures(x), him_players))
+
+    # Add sort order for UI table
+    for idx, player in enumerate(him_players):
+        player['sort_order'] = idx
 
     response = {
         'season_year': season_year,
