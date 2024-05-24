@@ -19,14 +19,16 @@ app.register_blueprint(himdex_blueprint)
 
 @app.route('/')
 def index():
-    # return render_template('landing.html')
-
     seasons = get_all_seasons()
     return render_template(
         'landing.html', 
         title = 'Landing', 
         seasons = seasons
     )
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/api/get_season_players', methods = ['POST'])
 def get_season_players():

@@ -1,53 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  NBA Himdex
-</h1>
-<h2 class="subtitle">
-  Who is HIM?
-</h2>
 <br>
-
-<div class="card">
-  <h5 class="card-header">Select HIM</h5>
-  <div class="card-body">
-      <h6 class="card-title">Season:</h6>
-      <select id="season_dropdown" class="btn btn-dropdown" style="display: block;">
-          {% for season in seasons %}
-          <option value="{{ season }}">{{ season }}</option>
-          {% endfor %}
-      </select>
-      <br>
-
-      <div id="toolbar">
-          <button id="search_players" class="btn btn-success">
-            <i class="fa fa-user-check"></i> Search Players
-          </button>
-      </div>
-      <br>
-
-      <h6 class="card-title">Who is HIM?</h6>
-      <select id="player_dropdown" class="btn btn-dropdown" style="display: block;">
-          <option value="Select Player">Select Player</option>
-      </select>
-      <br>
-
-      <div id="toolbar">
-        <button id="search_him_players" class="btn btn-success">
-          <i class="fa fa-user-check"></i> Load HIM Group
-        </button>
-    </div>
-    <br>
-
-      <!-- <h6 class="card-title">Description:</h6>
-      <input id = "job_description" type = "text" class = "btn btn-dropdown" style="text-align: left;"></input> -->
+<div class="row">
+  <div class="col-md-1">
+    <img src="{{url_for('static', filename='img/icon.png')}}" height="150" width="75">
+    <!-- https://andscape.com/features/new-nba-logo/ -->
+  </div>
+  <div class="col-md-6">
+    <h1 class="title default-font">
+      <strong>NBA HIMdex</strong>
+    </h1>
+    <h3 class="subtitle default-font">
+      Who is <b>HIM</b>?
+    </h3>
+    <p>
+      Choose the player you think is <b>HIM</b> and find out who else is HIM.<br>
+      In other words, who else impacts the game in a similar way?<br>
+      Learn more about it <a href="/about" class="a-style">here</a>!
+    </p>
   </div>
 </div>
 <br>
 
 <div class="card">
-  <h5 class="card-header">NBA HIMdex</h5>
+  <h5 class="card-header text-white sub-color default-font">Select HIM</h5>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-2">
+          <h6 class="card-title default-font">Season:</h6>
+        </div>
+        <div class="col-md-4">
+          <select id="season_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
+            {% for season in seasons %}
+            <option value="{{ season }}">{{ season }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div id="toolbar">
+            <button id="search_players" class="btn btn-warning btn-color">
+              Search Players
+            </button>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-2">
+          <h6 class="card-title default-font">Player:</h6>
+        </div>
+        <div class="col-md-4">
+          <select id="player_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
+              <option value="Select Player">Select Player</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div id="toolbar">
+            <button id="search_him_players" class="btn btn-warning btn-color">
+              Load HIM Group
+            </button>
+          </div>
+        </div>
+      </div>
+      <br>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">NBA HIMdex</h5>
    <div class="card-body" style="display: block; overflow-x: auto;">
       <div class = "table-responsive">
           <div id = "data-table-basic_wrapper" class = "dataTables_wrapper">
