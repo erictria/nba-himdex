@@ -16,7 +16,7 @@ def generate_season_players():
         players = get_players_by_season(season_year = season, order_by = 'player_name')
         season_players[season] = players
     
-    with open('season_players_2.json', 'w') as fp:
+    with open('season_players.json', 'w') as fp:
         json.dump(season_players, fp)
 
 if __name__ == '__main__':

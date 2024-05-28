@@ -42,8 +42,7 @@ def read_gbq_records(query: str) -> list:
     OUTPUT:
     records - list of dict records
     '''
-    
-    result_df = pandas_gbq.read_gbq(query, project_id = GCP_PROJECT)
+    result_df = pandas_gbq.read_gbq(query, project_id = GCP_PROJECT, credentials = GSERVICE_ACCOUNT_CREDENTIALS)
     records = result_df.to_dict('records')
 
     return records

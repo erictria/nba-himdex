@@ -1,0 +1,10 @@
+Dockerfile
+README.md
+*.pyc
+*.pyo
+*.pyd
+**__pycache__**
+.flaskenv
+*.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+*.ipynb
