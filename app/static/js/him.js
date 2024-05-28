@@ -109,7 +109,8 @@ function loadTable(data) {
                     return '<img src="' + data + '" alt="Image Unavailable" class="table-image" onerror="this.src=\'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png\';" />';
                 },
                 "width": "30%"
-            }
+            },
+            { "data": "sort_order", "visible": false}
         ],
         paging: true,
         searching: true,
@@ -117,7 +118,7 @@ function loadTable(data) {
         dom: 'Bfrtip',
         buttons: [{ extend: 'excelHtml5', className: 'btn btn-datatable'}],
         destroy: true,
-        order: [[0, 'asc']],
+        order: [[4, 'asc']],
         bSort: true
     }
 

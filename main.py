@@ -5,7 +5,7 @@ from flask import (
     json as flask_json,
     jsonify
 )
-from livereload import Server
+# from livereload import Server
 import os
 import pandas as pd
 
@@ -39,6 +39,10 @@ def get_season_players():
 
         return jsonify(season_players), 200
         
+# if __name__ == '__main__':
+#     server = Server(app.wsgi_app)
+#     server.serve(port=5000, debug=False, restart_delay=0)
+
 if __name__ == '__main__':
-    server = Server(app.wsgi_app)
-    server.serve(port=5000, debug=False, restart_delay=0)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)

@@ -71,6 +71,7 @@ if __name__ == '__main__':
         '2020-21',
         '2021-22',
         '2022-23',
+        '2023-24',
     ]
     for season_id in seasons:
         print(f'STARTING with {season_id}...')

@@ -10,7 +10,7 @@ from services.constants import (
     GCP_SCHEMA
 )
 
-
+# Change to ../ if running generate_static_files.py
 SERVICE_ACCOUNT_KEY_PATH = './credentials/nba_himdex_gbq.json'
 SCOPES = ['https://www.googleapis.com/auth/cloud-platform']
 
@@ -42,8 +42,7 @@ def read_gbq_records(query: str) -> list:
     OUTPUT:
     records - list of dict records
     '''
-    
-    result_df = pandas_gbq.read_gbq(query, project_id = GCP_PROJECT)
+    result_df = pandas_gbq.read_gbq(query, project_id = GCP_PROJECT, credentials = GSERVICE_ACCOUNT_CREDENTIALS)
     records = result_df.to_dict('records')
 
     return records
@@ -168,9 +167,13 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_i
             , nh.avg_stop_contribution_rate
             , nh.avg_tmt_bucket_uplift_contribution_rate
             , nh.avg_tmt_stop_uplift_contribution_rate
+            , CASE 
+                WHEN nh.player_id = {player_id} THEN 0
+                ELSE 1
+            END AS sort_order
         FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex nh
         JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = hg.himdex_cluster
-        ORDER BY 1, 2, 4
+        ORDER BY 12, 5
     '''
 
     him_players = read_gbq_records(query = query)
