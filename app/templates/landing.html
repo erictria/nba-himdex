@@ -16,8 +16,24 @@
     </h3>
     <p>
       Choose the player you think is <b>HIM</b> and find out who else is HIM.<br>
-      In other words, who else impacts the game in a similar way?<br>
-      Learn more about it <a href="/about" class="a-style">here</a>!
+      In other words, who else impacts the game in a similar way?
+    </p>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">Instructions</h5>
+  <div class="card-body">
+    <h6>
+      <ol>
+        <li>Select a season.</li>
+        <li>Select the player you believe is <b>HIM</b>.</li>
+        <li>Click the <b>Load HIM Group</b> button to load similar players from that season.</li>
+      </ol>
+    </h6>
+    <p>Pro Tip: Click on the player in the table to view the numbers! 
+      Learn more about it <a href="/about" class="a-style">here</a>.
     </p>
   </div>
 </div>
@@ -27,44 +43,42 @@
   <h5 class="card-header text-white sub-color default-font">Select HIM</h5>
   <div class="card-body">
       <div class="row">
-        <div class="col-md-2">
-          <h6 class="card-title default-font">Season:</h6>
+        <div class="col-md-2 text-container">
+          <h6 class="card-title default-font"><strong>Season:</strong></h6>
         </div>
         <div class="col-md-4">
-          <select id="season_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
+          <select id="season_dropdown" class="dropdown-menu" style="display: block; width: 80%;" onChange="loadPlayers(this);">
+            <option></option> <!-- Empty option for placeholder -->
             {% for season in seasons %}
             <option value="{{ season }}">{{ season }}</option>
             {% endfor %}
           </select>
         </div>
-        <div class="col-md-6">
-          <div id="toolbar">
-            <button id="search_players" class="btn btn-warning btn-color">
-              Search Players
-            </button>
-          </div>
+
+        <div class="col-md-2 text-container">
+          <h6 class="card-title default-font"><strong>Player:</strong></h6>
+        </div>
+        <div class="col-md-4">
+          <select id="player_dropdown" class="dropdown-menu" style="display: block; width: 80%;" onChange="activateButton(this);" disabled>
+              <option value="Select Player">Select Player</option>
+          </select>
         </div>
       </div>
       <br>
 
       <div class="row">
-        <div class="col-md-2">
-          <h6 class="card-title default-font">Player:</h6>
-        </div>
+        <div class="col-md-4"></div>
         <div class="col-md-4">
-          <select id="player_dropdown" class="dropdown-menu" style="display: block; width: 50%;">
-              <option value="Select Player">Select Player</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <div id="toolbar">
-            <button id="search_him_players" class="btn btn-warning btn-color">
+          <div id="toolbar" class="button-container">
+            <button id="search_him_players" class="btn btn-warning btn-color" style="width: 50%" disabled>
+              <span id="search_spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
               Load HIM Group
             </button>
           </div>
         </div>
+        <div class="col-md-4"></div>
       </div>
-      <br>
+
   </div>
 </div>
 <br>

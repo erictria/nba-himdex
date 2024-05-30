@@ -3,6 +3,7 @@ var $season_dropdown = $('#season_dropdown')
 var $search_players = $('#search_players')
 var $player_dropdown = $('#player_dropdown')
 var $search_him_players = $('#search_him_players')
+var $search_spinner = $('#search_spinner')
 
 function listSeasons() {
     const obj = {};
@@ -74,6 +75,10 @@ function listHimPlayers(season_year, player_id) {
         url: '/api/get_himdex_cluster',
         contentType: 'application/json; charset=utf-8',
         data: myJSON,
+        beforeSend: function() {
+            $("div.spanner").addClass("show");
+            $("div.overlay").addClass("show");
+        },
         success: function (response, textStatus, xhr) {
             him_players = response['him_players']
             console.log('Success: ' + textStatus)
@@ -85,6 +90,10 @@ function listHimPlayers(season_year, player_id) {
             console.log("Error: " + textStatus)
             console.log(xhr.responseText);
         },
+        complete: function() {
+          $("div.spanner").removeClass("show");
+          $("div.overlay").removeClass("show");
+        }
     });
 }   
 
@@ -94,21 +103,21 @@ function loadTable(data) {
     var table = $('#himdex_table').DataTable({
         "data": data,
         "columns": [
-            { "data": "team_abbreviation", "width": "20%"},
+            { "data": "team_abbreviation", "width": "10%"},
             { 
                 "data": "team_logo",
                 "render": function(data, type, row) {
-                    return '<img src="' + data + '" />';
+                    return '<img src="' + data + '" class="table-image" />';
                 },
-                "width": "20%"
+                "width": "40%"
             },
-            { "data": "player_name", "width": "30%"},
+            { "data": "player_name", "width": "10%"},
             { 
                 "data": "player_headshot",
                 "render": function(data, type, row) {
                     return '<img src="' + data + '" alt="Image Unavailable" class="table-image" onerror="this.src=\'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png\';" />';
                 },
-                "width": "30%"
+                "width": "40%"
             },
             { "data": "sort_order", "visible": false}
         ],
@@ -116,10 +125,12 @@ function loadTable(data) {
         searching: true,
         lengthMenu: [10, 25, 50, 100],
         dom: 'Bfrtip',
-        buttons: [{ extend: 'excelHtml5', className: 'btn btn-datatable'}],
         destroy: true,
         order: [[4, 'asc']],
-        bSort: true
+        bSort: true,
+        columnDefs: [
+            { className: "dt-center", targets: [1, 3] }
+        ]
     }
 
     );
@@ -166,17 +177,22 @@ $(document).ready(function() {
     });
 });
 
-$search_players.click(function () {
-    season = $season_dropdown.val()
-    console.log('here')
-    console.log(season)
-    listPlayers(season)
-})
-
 $search_him_players.click(function () {
+    $search_spinner.css('display', 'block')
     season = $season_dropdown.val()
     player_id = $player_dropdown.val()
     console.log('here')
     console.log(season)
     listHimPlayers(season, player_id)
+    $search_spinner.css('display', 'none')
 })
+
+function loadPlayers(_) {
+    $player_dropdown.prop('disabled', false)
+    season = $season_dropdown.val()
+    listPlayers(season)
+}
+
+function activateButton(_) {
+    $search_him_players.prop('disabled', false)
+}
