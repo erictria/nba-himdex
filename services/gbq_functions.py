@@ -91,6 +91,43 @@ def get_players_by_season(season_year: str, order_by: str = 'player_id') -> list
 
     return players
 
+def get_players_by_season_and_team(season_year: str, order_by: str = 'player_id') -> list:
+    '''
+    PURPOSE: gets the list of all players from a given season. 
+             players on different teams in one season have multiple records.
+
+    INPUT:
+    season_year - str season year
+
+    OUTPUT:
+    players - list of dict with player info
+    '''
+
+    query = f'''
+        WITH team_count AS (
+            SELECT
+                season_year
+                , player_id
+                , COUNT(DISTINCT team_id) AS teams
+            FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex
+            GROUP BY 1, 2
+        )
+        SELECT DISTINCT
+            CONCAT(nh.player_id, '-', nh.team_id) AS player_id
+            , CASE
+                WHEN tc.teams > 1 THEN Concat(nh.player_name, ', ', nh.team_abbreviation)
+                ELSE nh.player_name
+            END AS player_name
+        FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex nh
+        JOIN team_count tc ON nh.season_year = tc.season_year and nh.player_id = tc.player_id
+        WHERE nh.season_year = '{season_year}'
+        ORDER BY {order_by}
+    '''
+
+    players = read_gbq_records(query = query)
+
+    return players
+
 def get_himdex_cluster_by_player(player_id: int) -> list:
     '''
     PURPOSE: gets the players in the him cluster of a specified player
@@ -132,7 +169,7 @@ def get_himdex_cluster_by_player(player_id: int) -> list:
 
     return him_players
 
-def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_id: int = None) -> list:
+def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_id: int) -> list:
     '''
     PURPOSE: gets the players in the him cluster of a specified player
 
@@ -152,6 +189,7 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_i
                 , himdex_cluster
             FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex
             WHERE player_id = {player_id}
+            AND team_id = {team_id}
             AND season_year = '{season_year}'
         )
 

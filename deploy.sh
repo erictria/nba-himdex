@@ -9,7 +9,7 @@ REGION="us-east4"
 
 # parse the url based on the branch
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD | sed "s,/,-,g"`
-if [ "$CURRENT_BRANCH" != "master" ]; then
+if [ "$CURRENT_BRANCH" != "main" ]; then
     NAME="$NAME--$CURRENT_BRANCH"
 fi
 URL="gcr.io/$PROJECT/$NAME"

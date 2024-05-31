@@ -32,7 +32,7 @@ def about():
 
 @app.route('/api/get_season_players', methods = ['POST'])
 def get_season_players():
-    filename = os.path.join(app.static_folder, 'data', 'season_players.json')
+    filename = os.path.join(app.static_folder, 'data', 'season_players_team.json')
 
     with open(filename) as test_file:
         season_players = flask_json.load(test_file)

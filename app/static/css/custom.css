@@ -1,6 +1,9 @@
 .table-image {
-    height: 50;
-    width: 50;
+    max-width: 150px;
+    min-width: 50px;
+    height: auto;
+    display: block;
+    margin: auto;
 }
 
 .default-font {
@@ -28,7 +31,8 @@
 }
 
 .video-wrapper {
-    width: 720px; /* Set the desired width */
+    max-width: 720px; /* Set the desired width */
+    width: 100%; /* Allow the width to be 100% of its container */
     margin: auto; /* Center the video */
 }
 
@@ -61,4 +65,16 @@
     max-width: 500px;       /* Set a max width for the blockquote */
     width: 100%;            /* Ensure the blockquote takes full width available */
     margin: auto;           /* Center horizontally */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Aligns horizontally */
+    align-items: center;    /* Aligns vertically */
+}
+
+.text-container {
+    display: flex;
+    align-items: center;    /* Aligns vertically */
+    padding-top: 5px;          /* Add padding for spacing */
 }
