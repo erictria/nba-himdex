@@ -67,8 +67,8 @@ function listPlayers(season_year) {
     });
 }
 
-function listHimPlayers(season_year, player_id) {
-    const obj = {"season_year": season_year, "player_id": player_id};
+function listHimPlayers(season_year, player_id, team_id) {
+    const obj = {"season_year": season_year, "player_id": player_id, "team_id": team_id};
     const myJSON = JSON.stringify(obj);
     $.ajax({
         type: 'POST',
@@ -180,10 +180,13 @@ $(document).ready(function() {
 $search_him_players.click(function () {
     $search_spinner.css('display', 'block')
     season = $season_dropdown.val()
-    player_id = $player_dropdown.val()
+    val_id = $player_dropdown.val()
+    id_split = val_id.split("-")
+    player_id = id_split[0]
+    team_id = id_split[1]
     console.log('here')
     console.log(season)
-    listHimPlayers(season, player_id)
+    listHimPlayers(season, player_id, team_id)
     $search_spinner.css('display', 'none')
 })
 
