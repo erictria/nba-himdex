@@ -78,3 +78,9 @@
     align-items: center;    /* Aligns vertically */
     padding-top: 5px;          /* Add padding for spacing */
 }
+
+.text-card-body {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
