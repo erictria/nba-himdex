@@ -24,7 +24,7 @@ def ingest_team_games(season_id: str):
     team_dfs = []
     for team in teams:
         team_stats_df = NBA.get_team_game_stats(
-            team_id = team,
+            team_id = team['id'],
             season_id = season_id
         )
         team_dfs.append(team_stats_df)
@@ -55,7 +55,7 @@ def ingest_player_games(season_id: str):
     team_dfs = []
     for team in teams:
         team_stats_df = NBA.get_player_game_stats_by_team(
-            team_id = team,
+            team_id = team['id'],
             season_id = season_id
         )
         team_dfs.append(team_stats_df)
