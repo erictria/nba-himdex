@@ -175,3 +175,36 @@ class StatsBuilder:
 
         results_df = read_sql_to_df(sql_query)
         return results_df
+    
+    def compute_himdex_scores(self, season_year: str):
+        sql_query = f"""
+            WITH percentiles AS (
+                SELECT
+                    nh.season_year
+                    , nh.team_id
+                    , nh.player_id
+                    , ntile(100) over (partition by nh.season_year order by nh.total_plus_minus asc) AS plus_minus_percentile
+                    , ntile(100) over (partition by nh.season_year order by nh.avg_bucket_contribution_rate asc) AS avg_bucket_contribution_rate_percentile
+                    , ntile(100) over (partition by nh.season_year order by nh.avg_stop_contribution_rate asc) AS avg_stop_contribution_rate_percentile
+                    , ntile(100) over (partition by nh.season_year order by nh.avg_tmt_bucket_uplift_contribution_rate asc) AS avg_tmt_bucket_uplift_contribution_rate_percentile
+                    , ntile(100) over (partition by nh.season_year order by nh.avg_tmt_stop_uplift_contribution_rate asc) AS avg_tmt_stop_uplift_contribution_rate_percentile
+                FROM stats.nba_himdex nh
+            )
+            , himdex_scores AS (
+                SELECT 
+                    p.*
+                    , 0.3 * p.plus_minus_percentile +
+                        0.3 * p.avg_bucket_contribution_rate_percentile +
+                        0.3 * p.avg_stop_contribution_rate_percentile +
+                        0.05 * p.avg_tmt_bucket_uplift_contribution_rate_percentile +
+                        0.05 * p.avg_tmt_stop_uplift_contribution_rate_percentile as himdex_score
+                FROM percentiles p
+            )
+
+            SELECT *
+            FROM himdex_scores
+            WHERE season_year = '{season_year}'
+        """
+
+        results_df = read_sql_to_df(sql_query)
+        return results_df

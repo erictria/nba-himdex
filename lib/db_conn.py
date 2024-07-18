@@ -6,7 +6,7 @@ import re
 
 from dotenv import load_dotenv
 from io import StringIO
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 load_dotenv()
 
@@ -126,7 +126,8 @@ def read_sql_to_df(query: str, con = DB_CONN) -> pd.DataFrame:
     result_df - pandas dataframe queried data
     '''
     
-    result_df = pd.read_sql_query(query, con = con)
+    with con.connect() as my_con:
+        result_df = pd.read_sql_query(text(query), con = my_con)
 
     return result_df
 
