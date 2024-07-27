@@ -6,3 +6,4 @@ pandas-gbq==0.21.0
 python-dotenv==0.20.0
 typing==3.7.4.3
 Werkzeug==3.0.3
+numpy==1.21.6

@@ -150,6 +150,7 @@ function loadTable(data) {
             var rowData = row.data();
             var hiddenData = '<div>' +
                              '<b>' + rowData.player_name + ', ' + rowData.team_abbreviation + '</b><br>' + 
+                             'Season: ' + rowData.season_year + '<br>' +
                              'Minutes Per Game: ' + rowData.average_min.toFixed(2) + '<br>' +
                              'Total Plus Minus: ' + rowData.total_plus_minus + '<br>' +
                              'Average Bucket Contribution Rate: ' + rowData.avg_bucket_contribution_rate.toFixed(2) + '% <br>' +
@@ -291,6 +292,7 @@ function loadRankingsTable(data) {
             var rowData = row.data();
             var hiddenData = '<div>' +
                              '<b>' + rowData.player_name + ', ' + rowData.team_abbreviation + '</b><br>' + 
+                             'Season: ' + rowData.season_year + '<br>' +
                              'HIMdex Score: <b>' + rowData.himdex_score.toFixed(2) + '</b><br>' +
                              'Total Plus Minus Percentile: ' + rowData.plus_minus_percentile + '<br>' +
                              'Average Bucket Contribution Rate Percentile: ' + rowData.avg_bucket_contribution_rate_percentile + '<br>' +

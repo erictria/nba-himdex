@@ -217,14 +217,30 @@
 <br>
 
 <div id="about_rankings" class="card">
-  <h5 class="card-header text-white sub-color default-font">Rankings</h5>
+  <h5 class="card-header text-white sub-color default-font">Scores & Rankings</h5>
   <div class="card-body text-card-body">
       <h6>
+        The <b>HIMdex rankings</b> are based off of the <b>HIMdex scores</b> of players in a given season.
+        The <b>HIMdex score</b> is computed using the percentiles of the metrics described in the previous section.<br><br>
+        
+        The computation is broken down this way:
+      </h6>
+
+      <h6>
         <ul>
-          <li>HIMdex scores and rankings for each player per season.</li>
-          <li>Separate HIMdexes for the Regular Season and Playoffs.</li>
-          <li>A more sophisticated way for computing the Teammate Bucket/Stop Boost Contribution Rate metrics.</li>
+          <li>30% Total Plus Minus Percentile</li>
+          <li>30% Bucket Contribution Rate Percentile</li>
+          <li>30% Stop Contribution Rate Percentile</li>
+          <li>5% Teammate Bucket Boost Contribution Rate Percentile</li>
+          <li>5% Teammate Stop Boost Contribution Rate Percentile</li>
         </ul>
+      </h6>
+
+      <h6>
+        The maximum possible score is <b>100</b>.<br><br>
+
+        Currently, not much weight is put into the Boost Contribution Rate percentiles since the computation for those metrics
+        are still being improved.
       </h6>
       
   </div>
@@ -236,7 +252,6 @@
   <div class="card-body text-card-body">
       <h6>
         <ul>
-          <li>HIMdex scores and rankings for each player per season.</li>
           <li>Separate HIMdexes for the Regular Season and Playoffs.</li>
           <li>A more sophisticated way for computing the Teammate Bucket/Stop Boost Contribution Rate metrics.</li>
         </ul>
