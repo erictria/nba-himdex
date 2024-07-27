@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col-md-1">
+    <img src="{{url_for('static', filename='img/icon.png')}}" height="150" width="75">
+    <!-- https://andscape.com/features/new-nba-logo/ -->
+  </div>
+  <div class="col-md-6">
+    <h1 class="title default-font">
+      <strong>NBA HIMdex Rankings</strong>
+    </h1>
+    <h3 class="subtitle default-font">
+      Who is <b>HIM</b>?
+    </h3>
+    <p>
+      An objective ranking to determine who is <b>HIM</b> in a given season.
+    </p>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">Instructions</h5>
+  <div class="card-body text-card-body">
+    <h6>
+      <ol>
+        <li>Select a season from the <b>Select Season</b> dropdown.</li>
+        <li>Click the <b>Load HIM Rankings</b> button to load the HIM rankings for that season.</li>
+      </ol>
+    </h6>
+    <p><b>Pro Tip:</b> Click on the player in the table to view the numbers! 
+      Learn more about the rankings <a href="/about#about_rankings" class="a-style">here</a>.<br>
+    </p>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">Select Season</h5>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-md-2 text-container">
+          <h6 class="card-title default-font"><strong>Season:</strong></h6>
+        </div>
+        <div class="col-md-4">
+          <select id="season_dropdown_rnk" class="dropdown-menu" style="display: block; width: 80%;" onChange="activateRankingsButton(this);">
+            <option></option> <!-- Empty option for placeholder -->
+            {% for season in seasons %}
+            <option value="{{ season }}">{{ season }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div id="toolbar" class="button-container">
+            <button id="search_rankings" class="btn btn-warning btn-color" style="width: 50%" disabled>
+              <span id="search_spinner_rnk" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+              Load HIM Rankings
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <h5 class="card-header text-white sub-color default-font">NBA HIMdex Rankings</h5>
+   <div class="card-body" style="display: block; overflow-x: auto;">
+      <div class = "table-responsive">
+          <div id = "data-table-basic_wrapper_rnk" class = "dataTables_wrapper">
+              <table id = "himdex_rankings_table" class = "dataTable display" style = "white-space: nowrap;">
+                  <thead>
+                      <tr>
+                          <th>Ranking</th>
+                          <th>Team</th>
+                          <th></th>
+                          <th>Player</th>
+                          <th></th>
+                          <th>HIMdex Score</th>
+                      </tr>
+                  </thead>
+                  <tbody id = "table_body_rnk">
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+  
+  </div>
+
+</div>
+<br>
+{% endblock %}

@@ -205,13 +205,18 @@ def get_himdex_cluster_by_player_season(player_id: int, season_year: str, team_i
             , nh.avg_stop_contribution_rate
             , nh.avg_tmt_bucket_uplift_contribution_rate
             , nh.avg_tmt_stop_uplift_contribution_rate
+            , nhs.himdex_score
             , CASE 
                 WHEN nh.player_id = {player_id} THEN 0
                 ELSE 1
             END AS sort_order
         FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex nh
         JOIN him_group hg ON nh.season_year = hg.season_year AND nh.himdex_cluster = hg.himdex_cluster
-        ORDER BY 12, 5
+        JOIN {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex_scores nhs 
+            ON nh.player_id = nhs.player_id 
+            AND nh.team_id = nhs.team_id 
+            AND nh.season_year = nhs.season_year
+        ORDER BY 13, 5
     '''
 
     him_players = read_gbq_records(query = query)
@@ -254,3 +259,32 @@ def get_himdex_player(player_id: int, season_year: str, team_id: int) -> list:
     him_player = him_players[0]
 
     return him_player
+
+def get_himdex_rankings_by_season(season_year: str, limit: int = 50) -> list:
+    query = f'''
+        SELECT
+            nhs.season_year
+            , nhs.team_id
+            , nh.team_abbreviation
+            , nhs.player_id
+            , nh.player_name
+            , nhs.plus_minus_percentile
+            , nhs.avg_bucket_contribution_rate_percentile
+            , nhs.avg_stop_contribution_rate_percentile
+            , nhs.avg_tmt_bucket_uplift_contribution_rate_percentile
+            , nhs.avg_tmt_stop_uplift_contribution_rate_percentile
+            , nhs.himdex_score
+            , ROW_NUMBER () OVER (PARTITION BY nhs.season_year ORDER BY nhs.himdex_score DESC) AS himdex_ranking
+        FROM {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex_scores nhs
+        JOIN {GCP_PROJECT}.{GCP_SCHEMA}.nba_himdex nh
+            ON nh.player_id = nhs.player_id 
+            AND nh.team_id = nhs.team_id 
+            AND nh.season_year = nhs.season_year
+        WHERE nhs.season_year = '{season_year}'
+        ORDER BY nhs.himdex_score DESC
+        LIMIT {limit}
+    '''
+
+    him_rankings = read_gbq_records(query = query)
+
+    return him_rankings

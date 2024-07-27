@@ -8,7 +8,8 @@ from services.gbq_functions import (
     get_all_seasons,
     get_players_by_season,
     get_himdex_cluster_by_player_season,
-    get_himdex_player
+    get_himdex_player,
+    get_himdex_rankings_by_season
 )
 from services.nba_functions import get_pictures
 
@@ -83,6 +84,23 @@ def get_player():
         'player_id': player_id,
         'team_id': team_id,
         'him_player': him_player
+    }
+
+    return jsonify(response), 200
+
+@himdex_blueprint.route('/api/get_himdex_rankings', methods = ['POST'])
+def get_himdex_rankings():
+    body = request.get_json()
+
+    season_year = body['season_year']
+    him_rankings = get_himdex_rankings_by_season(
+        season_year = season_year,
+    )
+    him_rankings = list(map(lambda x: get_pictures(x), him_rankings))
+
+    response = {
+        'season_year': season_year,
+        'him_rankings': him_rankings
     }
 
     return jsonify(response), 200

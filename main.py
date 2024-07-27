@@ -26,6 +26,15 @@ def index():
         seasons = seasons
     )
 
+@app.route('/rankings')
+def rankings():
+    seasons = get_all_seasons()
+    return render_template(
+        'rankings.html', 
+        title = 'Rankings', 
+        seasons = seasons
+    )
+
 @app.route('/about')
 def about():
     return render_template('about.html')
